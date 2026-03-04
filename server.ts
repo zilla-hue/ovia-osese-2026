@@ -73,7 +73,7 @@ if (newsCount.count === 0) {
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  let PORT = parseInt(process.env.PORT || "3000", 10);
 
   app.use(express.json());
 
@@ -173,8 +173,21 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
+  const server = app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);
+  });
+
+  // Handle port already in use error
+  server.on("error", (err: NodeJS.ErrnoException) => {
+    if (err.code === "EADDRINUSE") {
+      console.log(`Port ${PORT} is in use, trying ${PORT + 1}...`);
+      PORT++;
+      server.listen(PORT, "0.0.0.0", () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+      });
+    } else {
+      throw err;
+    }
   });
 }
 

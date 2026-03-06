@@ -47,14 +47,14 @@ export default function PlanVisit() {
       <section className="relative h-[45vh] min-h-[320px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/ogori-village.png"
+            src="/images/WhatsApp Image 2026-03-04 at 13.46.04 (3).jpeg"
             alt="Scenic view of Ogori village"
             className="w-full h-full object-cover"
             fetchPriority="high"
             decoding="async"
           />
         </div>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-stone-900/90 via-stone-900/40 to-stone-900/20" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-royal-700/90 via-royal-700/40 to-royal-700/20" />
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">
             Plan Your Visit
@@ -72,10 +72,10 @@ export default function PlanVisit() {
             {cards.map(({ icon: Icon, title, items }) => (
               <div
                 key={title}
-                className="bg-stone-50 border border-stone-200 rounded-2xl p-8 hover:border-amber-300 hover:shadow-lg transition-all duration-300"
+                className="bg-stone-50 border border-stone-200 rounded-2xl p-8 hover:border-wine-200 hover:shadow-lg transition-all duration-300"
               >
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-wine-50 text-wine-600 rounded-full flex items-center justify-center flex-shrink-0">
                     <Icon className="w-6 h-6" />
                   </div>
                   <h2 className="text-xl font-serif font-bold text-stone-900">
@@ -88,7 +88,7 @@ export default function PlanVisit() {
                       key={item}
                       className="flex items-start gap-3 text-stone-700"
                     >
-                      <span className="mt-2 w-1.5 h-1.5 bg-amber-700 rounded-full flex-shrink-0" />
+                      <span className="mt-2 w-1.5 h-1.5 bg-wine-600 rounded-full flex-shrink-0" />
                       <span className="leading-relaxed">{item}</span>
                     </li>
                   ))}
@@ -102,13 +102,13 @@ export default function PlanVisit() {
       {/* ── Image Divider ── */}
       <section className="relative h-64 md:h-80 overflow-hidden">
         <img
-          src="/images/family-reunion.png"
+          src="/images/WhatsApp Image 2026-03-04 at 13.46.04 (1).jpeg"
           alt="Families reuniting at a cultural festival"
           className="w-full h-full object-cover"
           loading="lazy"
           decoding="async"
         />
-        <div className="absolute inset-0 bg-stone-900/30" />
+        <div className="absolute inset-0 bg-royal-700/40" />
       </section>
     </div>
   );

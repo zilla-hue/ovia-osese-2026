@@ -47,14 +47,14 @@ export default function News() {
       <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/hero-festival.png"
+            src="/images/WhatsApp Image 2026-03-04 at 13.46.03 (2).jpeg"
             alt="Vibrant cultural festival scene"
             className="w-full h-full object-cover"
             fetchPriority="high"
             decoding="async"
           />
         </div>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-stone-900/90 via-stone-900/50 to-stone-900/30" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-royal-700/90 via-royal-700/50 to-royal-700/30" />
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">
             News &amp; Updates
@@ -74,7 +74,7 @@ export default function News() {
                 key={label}
                 className="inline-flex items-center gap-2 bg-white border border-stone-200 text-stone-700 px-4 py-2 rounded-full text-sm font-medium"
               >
-                <Icon className="w-4 h-4 text-amber-700" />
+                <Icon className="w-4 h-4 text-wine-600" />
                 {label}
               </span>
             ))}
@@ -87,7 +87,7 @@ export default function News() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
             <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-700" />
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-wine-600" />
             </div>
           ) : news.length === 0 ? (
             <div className="text-center py-20 bg-stone-50 rounded-2xl border border-stone-200">
@@ -120,7 +120,7 @@ export default function News() {
                     </div>
                   )}
                   <div className="p-6 flex-grow flex flex-col">
-                    <div className="text-sm text-amber-700 font-medium mb-2">
+                    <div className="text-sm text-wine-600 font-medium mb-2">
                       {format(new Date(item.publishedAt), "MMMM d, yyyy")}
                     </div>
                     <h2 className="text-xl font-bold text-stone-900 mb-3 line-clamp-2">
@@ -131,7 +131,7 @@ export default function News() {
                     </p>
                     <a
                       href={`/news/${item.slug}`}
-                      className="inline-flex items-center text-amber-700 font-medium hover:text-amber-800 mt-auto"
+                      className="inline-flex items-center text-wine-600 font-medium hover:text-wine-700 mt-auto"
                     >
                       Read more
                       <svg

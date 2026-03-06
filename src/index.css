@@ -11,6 +11,27 @@
 @theme {
   --font-serif:
     "Kugile", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  /* Brand: Wine */
+  --color-wine-50: #f2e8e9;
+  --color-wine-100: #e5d1d3;
+  --color-wine-200: #cba3a8;
+  --color-wine-500: #8b3a44;
+  --color-wine-600: #722f37;
+  --color-wine-700: #5c252c;
+  --color-wine-800: #461b21;
+
+  /* Brand: Royal Blue */
+  --color-royal-50: #e8edf5;
+  --color-royal-100: #d1dbeb;
+  --color-royal-200: #a3b7d6;
+  --color-royal-500: #1a3a7a;
+  --color-royal-600: #002366;
+  --color-royal-700: #001a4d;
+  --color-royal-800: #001133;
+
+  /* Brand: Accent Gold */
+  --color-gold: #d4af37;
 }
 
 /* Hero entrance animation */

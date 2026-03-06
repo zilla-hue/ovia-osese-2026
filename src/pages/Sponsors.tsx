@@ -17,10 +17,10 @@ type SponsorFormValues = z.infer<typeof sponsorSchema>;
 const tiers = [
   {
     name: "Title Sponsor",
-    bg: "bg-amber-50",
-    border: "border-amber-200",
-    heading: "text-amber-900",
-    badge: "bg-amber-700 text-white",
+    bg: "bg-wine-50",
+    border: "border-wine-200",
+    heading: "text-wine-900",
+    badge: "bg-wine-600 text-white",
   },
   {
     name: "Gold Sponsor",
@@ -91,14 +91,14 @@ export default function Sponsors() {
       <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/family-reunion.png"
+            src="/images/WhatsApp Image 2026-03-04 at 13.46.02 (3).jpeg"
             alt="Community gathering at a cultural festival"
             className="w-full h-full object-cover"
             fetchPriority="high"
             decoding="async"
           />
         </div>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-stone-900/90 via-stone-900/50 to-stone-900/30" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-royal-700/90 via-royal-700/50 to-royal-700/30" />
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">
             Sponsors &amp; Partners
@@ -149,7 +149,7 @@ export default function Sponsors() {
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
             {benefits.map((b) => (
               <li key={b} className="flex items-center gap-2 text-stone-700">
-                <span className="w-2 h-2 bg-amber-700 rounded-full flex-shrink-0" />
+                <span className="w-2 h-2 bg-wine-600 rounded-full flex-shrink-0" />
                 {b}
               </li>
             ))}
@@ -158,7 +158,7 @@ export default function Sponsors() {
           <a
             href="/sponsorship-deck.pdf"
             download
-            className="inline-flex items-center gap-2 bg-amber-700 hover:bg-amber-600 text-white px-6 py-3 rounded-md text-base font-medium transition-colors"
+            className="inline-flex items-center gap-2 bg-wine-600 hover:bg-wine-500 text-white px-6 py-3 rounded-md text-base font-medium transition-colors"
           >
             <Download className="w-5 h-5" />
             Download Sponsorship Deck
@@ -182,7 +182,7 @@ export default function Sponsors() {
               </p>
               <button
                 onClick={() => setSubmitSuccess(false)}
-                className="mt-6 text-amber-700 font-medium hover:underline"
+                className="mt-6 text-wine-600 font-medium hover:underline"
               >
                 Submit another inquiry
               </button>
@@ -304,7 +304,7 @@ export default function Sponsors() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3 px-4 rounded-md shadow-sm text-lg font-medium text-white bg-amber-700 hover:bg-amber-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full py-3 px-4 rounded-md shadow-sm text-lg font-medium text-white bg-wine-600 hover:bg-wine-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {isSubmitting ? "Submitting…" : "Submit Inquiry"}
               </button>

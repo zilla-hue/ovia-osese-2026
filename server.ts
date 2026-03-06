@@ -47,6 +47,16 @@ db.exec(`
     imageUrl TEXT,
     publishedAt DATETIME DEFAULT CURRENT_TIMESTAMP
   );
+
+  CREATE TABLE IF NOT EXISTS messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    message TEXT NOT NULL,
+    status TEXT DEFAULT 'unread',
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
 `);
 
 // Insert some mock news if empty
@@ -155,6 +165,31 @@ async function startServer() {
       res.json({ success: true, data: news });
     } catch (error) {
       res.status(500).json({ success: false, error: "Failed to fetch news" });
+    }
+  });
+
+  // Contact Message
+  app.post("/api/contact", (req, res) => {
+    try {
+      const { name, email, subject, message } = req.body;
+
+      const stmt = db.prepare(`
+        INSERT INTO messages (
+          name, email, subject, message
+        ) VALUES (?, ?, ?, ?)
+      `);
+
+      const info = stmt.run(
+        name,
+        email,
+        subject,
+        message
+      );
+
+      res.status(201).json({ success: true, id: info.lastInsertRowid });
+    } catch (error) {
+      console.error("Contact error:", error);
+      res.status(500).json({ success: false, error: "Failed to send message" });
     }
   });
 

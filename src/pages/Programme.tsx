@@ -5,15 +5,14 @@ const schedule = [
     day: "Sunday",
     date: "April 12",
     title: "Opening Activities",
-    desc: "Welcome gatherings and community commencement.",
-    accent: "bg-amber-600",
+    accent: "bg-wine-600",
   },
   {
     day: "Monday",
     date: "April 13",
     title: "Cultural Engagements",
     desc: "Heritage discussions and youth participation.",
-    accent: "bg-amber-700",
+    accent: "bg-royal-600",
   },
   {
     day: "Tuesday",
@@ -26,29 +25,27 @@ const schedule = [
     day: "Wednesday",
     date: "April 15",
     title: "Cultural Displays",
-    desc: "Traditional performances and processions.",
-    accent: "bg-amber-800",
+    accent: "bg-wine-600",
   },
   {
     day: "Thursday",
     date: "April 16",
     title: "Cultural Competitions",
     desc: "Music, dance and heritage contests.",
-    accent: "bg-stone-800",
+    accent: "bg-royal-600",
   },
   {
     day: "Friday",
     date: "April 17",
     title: "Preparatory Celebrations",
-    desc: "Final rehearsals and community gatherings.",
-    accent: "bg-amber-700",
+    accent: "bg-wine-600",
   },
   {
     day: "Saturday",
     date: "April 18",
     title: "Grand Finale",
     desc: "Main cultural celebration and closing festivities.",
-    accent: "bg-amber-600",
+    accent: "bg-royal-600",
   },
 ];
 
@@ -59,14 +56,14 @@ export default function Programme() {
       <section className="relative h-[45vh] min-h-[320px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/traditional-music.png"
+            src="/images/WhatsApp Image 2026-03-04 at 13.46.02 (4).jpeg"
             alt="Traditional musicians at an Ogori festival"
             className="w-full h-full object-cover"
             fetchPriority="high"
             decoding="async"
           />
         </div>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-stone-900/90 via-stone-900/50 to-stone-900/30" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-royal-700/90 via-royal-700/50 to-royal-700/30" />
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">
             Festival Programme
@@ -77,7 +74,7 @@ export default function Programme() {
           <a
             href="/programme-2026.pdf"
             download
-            className="inline-flex items-center gap-2 bg-amber-700 hover:bg-amber-600 text-white px-6 py-3 rounded-md text-base font-medium transition-all duration-300 hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 bg-wine-600 hover:bg-wine-500 text-white px-6 py-3 rounded-md text-base font-medium transition-all duration-300 hover:-translate-y-0.5"
           >
             <Download className="w-5 h-5" />
             Download Full Programme (PDF)
@@ -92,7 +89,7 @@ export default function Programme() {
             {schedule.map((item) => (
               <div
                 key={item.day}
-                className="relative bg-stone-50 border border-stone-200 rounded-xl overflow-hidden transition-all hover:shadow-md hover:border-amber-200 duration-300"
+                className="relative bg-stone-50 border border-stone-200 rounded-xl overflow-hidden transition-all hover:shadow-md hover:border-wine-200 duration-300"
               >
                 {/* left accent bar */}
                 <div
@@ -104,7 +101,7 @@ export default function Programme() {
                       <span className="text-xl font-serif font-bold text-stone-900">
                         {item.day}
                       </span>
-                      <span className="text-sm text-amber-700 font-medium">
+                      <span className="text-sm text-wine-600 font-medium">
                         {item.date}
                       </span>
                     </div>

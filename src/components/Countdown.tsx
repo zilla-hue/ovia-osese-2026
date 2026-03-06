@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from "date-fns";
+import {
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+  differenceInSeconds,
+} from "date-fns";
 
 export default function Countdown({ targetDate }: { targetDate: Date }) {
   const [timeLeft, setTimeLeft] = useState({
@@ -26,20 +31,36 @@ export default function Countdown({ targetDate }: { targetDate: Date }) {
   return (
     <div className="flex justify-center space-x-4 md:space-x-8 text-center">
       <div className="flex flex-col items-center">
-        <span className="text-4xl md:text-6xl font-serif font-bold text-amber-800">{timeLeft.days}</span>
-        <span className="text-sm md:text-base text-stone-600 uppercase tracking-widest mt-2">Days</span>
+        <span className="text-4xl md:text-6xl font-serif font-bold text-gold">
+          {timeLeft.days}
+        </span>
+        <span className="text-sm md:text-base text-stone-600 uppercase tracking-widest mt-2">
+          Days
+        </span>
       </div>
       <div className="flex flex-col items-center">
-        <span className="text-4xl md:text-6xl font-serif font-bold text-amber-800">{timeLeft.hours}</span>
-        <span className="text-sm md:text-base text-stone-600 uppercase tracking-widest mt-2">Hours</span>
+        <span className="text-4xl md:text-6xl font-serif font-bold text-gold">
+          {timeLeft.hours}
+        </span>
+        <span className="text-sm md:text-base text-stone-600 uppercase tracking-widest mt-2">
+          Hours
+        </span>
       </div>
       <div className="flex flex-col items-center">
-        <span className="text-4xl md:text-6xl font-serif font-bold text-amber-800">{timeLeft.minutes}</span>
-        <span className="text-sm md:text-base text-stone-600 uppercase tracking-widest mt-2">Minutes</span>
+        <span className="text-4xl md:text-6xl font-serif font-bold text-gold">
+          {timeLeft.minutes}
+        </span>
+        <span className="text-sm md:text-base text-stone-600 uppercase tracking-widest mt-2">
+          Minutes
+        </span>
       </div>
       <div className="flex flex-col items-center">
-        <span className="text-4xl md:text-6xl font-serif font-bold text-amber-800">{timeLeft.seconds}</span>
-        <span className="text-sm md:text-base text-stone-600 uppercase tracking-widest mt-2">Seconds</span>
+        <span className="text-4xl md:text-6xl font-serif font-bold text-gold">
+          {timeLeft.seconds}
+        </span>
+        <span className="text-sm md:text-base text-stone-600 uppercase tracking-widest mt-2">
+          Seconds
+        </span>
       </div>
     </div>
   );

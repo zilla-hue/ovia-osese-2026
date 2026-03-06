@@ -21,14 +21,14 @@ export default function About() {
       <section className="relative h-[50vh] min-h-[360px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/elders-council.png"
+            src="/images/WhatsApp Image 2026-03-04 at 13.46.01.jpeg"
             alt="Community elders in traditional council"
             className="w-full h-full object-cover"
             fetchPriority="high"
             decoding="async"
           />
         </div>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-stone-900/90 via-stone-900/50 to-stone-900/30" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-royal-700/90 via-royal-700/50 to-royal-700/30" />
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">
             About Ovia Osese
@@ -60,7 +60,7 @@ export default function About() {
             </div>
             <div className="rounded-2xl overflow-hidden shadow-lg">
               <img
-                src="/images/ogori-village.png"
+                src="/images/WhatsApp Image 2026-03-04 at 13.46.04 (3).jpeg"
                 alt="Scenic aerial view of Ogori village in Kogi State"
                 className="w-full h-auto object-cover"
                 loading="lazy"
@@ -85,9 +85,9 @@ export default function About() {
             {significanceItems.map(({ icon: Icon, label }) => (
               <div
                 key={label}
-                className="flex items-center gap-4 bg-white border border-stone-200 p-6 rounded-xl hover:border-amber-300 hover:shadow-md transition-all duration-300"
+                className="flex items-center gap-4 bg-white border border-stone-200 p-6 rounded-xl hover:border-wine-200 hover:shadow-md transition-all duration-300"
               >
-                <div className="w-12 h-12 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-wine-50 text-wine-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <Icon className="w-6 h-6" />
                 </div>
                 <span className="text-lg font-medium text-stone-900">
@@ -107,13 +107,13 @@ export default function About() {
       {/* ── Full-width Image Divider ── */}
       <section className="relative h-64 md:h-96 overflow-hidden">
         <img
-          src="/images/traditional-music.png"
+          src="/images/WhatsApp Image 2026-03-04 at 13.46.02 (4).jpeg"
           alt="Traditional drummers performing at a village festival"
           className="w-full h-full object-cover"
           loading="lazy"
           decoding="async"
         />
-        <div className="absolute inset-0 bg-stone-900/30" />
+        <div className="absolute inset-0 bg-royal-700/40" />
       </section>
 
       {/* ── Cultural Etiquette ── */}
@@ -122,7 +122,7 @@ export default function About() {
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-4">
             Cultural Etiquette
           </h2>
-          <p className="text-sm uppercase tracking-widest text-amber-700 font-medium mb-8">
+          <p className="text-sm uppercase tracking-widest text-wine-600 font-medium mb-8">
             Visitors Please Note
           </p>
           <p className="text-lg text-stone-700 leading-relaxed mb-8">
@@ -136,7 +136,7 @@ export default function About() {
                 key={item}
                 className="flex items-start gap-3 text-lg text-stone-700"
               >
-                <span className="mt-1.5 w-2.5 h-2.5 bg-amber-700 rounded-full flex-shrink-0" />
+                <span className="mt-1.5 w-2.5 h-2.5 bg-wine-600 rounded-full flex-shrink-0" />
                 {item}
               </li>
             ))}

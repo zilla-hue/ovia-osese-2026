@@ -33,7 +33,7 @@ const registerSchema = z.object({
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 const inputClass =
-  "w-full px-4 py-3 border border-stone-300 rounded-md focus:ring-amber-500 focus:border-amber-500 bg-white text-stone-900";
+  "w-full px-4 py-3 border border-stone-300 rounded-md focus:ring-wine-500 focus:border-wine-500 bg-white text-stone-900";
 const labelClass = "block text-sm font-medium text-stone-700 mb-1";
 const errorClass = "mt-1 text-sm text-red-600";
 
@@ -47,9 +47,9 @@ const participationOptions = [
 
 function SectionHeader({ letter, title }: { letter: string; title: string }) {
   return (
-    <div className="border-t-2 border-amber-200 pt-8">
+    <div className="border-t-2 border-wine-200 pt-8">
       <div className="flex items-center gap-3 mb-6">
-        <span className="w-8 h-8 bg-amber-700 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+        <span className="w-8 h-8 bg-wine-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
           {letter}
         </span>
         <h3 className="text-xl font-serif font-bold text-stone-900">{title}</h3>
@@ -100,14 +100,14 @@ export default function Register() {
       <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/maiden-procession.png"
+            src="/images/WhatsApp Image 2026-03-04 at 13.46.01.jpeg"
             alt="Traditional ceremonial procession in Ogori"
             className="w-full h-full object-cover"
             fetchPriority="high"
             decoding="async"
           />
         </div>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-stone-900/90 via-stone-900/50 to-stone-900/30" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-royal-700/90 via-royal-700/50 to-royal-700/30" />
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">
             Attendance &amp; Travel Registration
@@ -143,7 +143,7 @@ export default function Register() {
                 </p>
                 <button
                   onClick={() => setSubmitSuccess(false)}
-                  className="text-amber-700 font-medium hover:underline"
+                  className="text-wine-600 font-medium hover:underline"
                 >
                   Register another person
                 </button>
@@ -391,7 +391,7 @@ export default function Register() {
                           type="checkbox"
                           value={opt.value}
                           {...register("interests")}
-                          className="w-5 h-5 rounded border-stone-300 text-amber-700 focus:ring-amber-500"
+                          className="w-5 h-5 rounded border-stone-300 text-wine-600 focus:ring-wine-500"
                         />
                         <span className="text-stone-700 group-hover:text-stone-900 transition-colors">
                           {opt.label}
@@ -433,7 +433,7 @@ export default function Register() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-4 px-4 rounded-md shadow-sm text-lg font-medium text-white bg-amber-700 hover:bg-amber-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="w-full py-4 px-4 rounded-md shadow-sm text-lg font-medium text-white bg-wine-600 hover:bg-wine-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-wine-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     {isSubmitting ? "Submitting…" : "Complete Registration"}
                   </button>

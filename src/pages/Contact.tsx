@@ -1,20 +1,62 @@
 import { Mail, Phone, MapPin } from "lucide-react";
+import React, { useState } from "react";
 
 export default function Contact() {
+  const [formState, setFormState] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { id, value } = e.target;
+    setFormState((prev) => ({ ...prev, [id.replace("contact-", "")]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formState),
+      });
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormState({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setSubmitStatus("idle"), 5000);
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex flex-col">
       {/* ── Header ── */}
       <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/ogori-village.png"
+            src="/images/WhatsApp Image 2026-03-04 at 13.46.04 (3).jpeg"
             alt="Scenic view of Ogori village"
             className="w-full h-full object-cover"
             fetchPriority="high"
             decoding="async"
           />
         </div>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-stone-900/90 via-stone-900/50 to-stone-900/30" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-royal-700/90 via-royal-700/50 to-royal-700/30" />
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">
             Contact
@@ -41,7 +83,7 @@ export default function Contact() {
               <div className="space-y-8">
                 {/* Email */}
                 <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-wine-50 text-wine-600 rounded-full flex items-center justify-center flex-shrink-0">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
@@ -50,7 +92,7 @@ export default function Contact() {
                     </h3>
                     <a
                       href="mailto:info@oviaosese.ng"
-                      className="text-stone-600 hover:text-amber-700 transition-colors"
+                      className="text-stone-600 hover:text-wine-600 transition-colors"
                     >
                       info@oviaosese.ng
                     </a>
@@ -59,7 +101,7 @@ export default function Contact() {
 
                 {/* Phone */}
                 <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-wine-50 text-wine-600 rounded-full flex items-center justify-center flex-shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
@@ -98,7 +140,7 @@ export default function Contact() {
 
                 {/* Location */}
                 <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-wine-50 text-wine-600 rounded-full flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
@@ -118,7 +160,7 @@ export default function Contact() {
                 <div className="flex gap-4">
                   <a
                     href="#"
-                    className="w-10 h-10 bg-stone-100 hover:bg-amber-100 text-stone-600 hover:text-amber-800 rounded-full flex items-center justify-center transition-colors"
+                    className="w-10 h-10 bg-stone-100 hover:bg-wine-50 text-stone-600 hover:text-wine-600 rounded-full flex items-center justify-center transition-colors"
                     aria-label="Facebook"
                   >
                     <svg
@@ -131,7 +173,7 @@ export default function Contact() {
                   </a>
                   <a
                     href="#"
-                    className="w-10 h-10 bg-stone-100 hover:bg-amber-100 text-stone-600 hover:text-amber-800 rounded-full flex items-center justify-center transition-colors"
+                    className="w-10 h-10 bg-stone-100 hover:bg-wine-50 text-stone-600 hover:text-wine-600 rounded-full flex items-center justify-center transition-colors"
                     aria-label="Instagram"
                   >
                     <svg
@@ -144,7 +186,7 @@ export default function Contact() {
                   </a>
                   <a
                     href="#"
-                    className="w-10 h-10 bg-stone-100 hover:bg-amber-100 text-stone-600 hover:text-amber-800 rounded-full flex items-center justify-center transition-colors"
+                    className="w-10 h-10 bg-stone-100 hover:bg-wine-50 text-stone-600 hover:text-wine-600 rounded-full flex items-center justify-center transition-colors"
                     aria-label="X (Twitter)"
                   >
                     <svg
@@ -164,7 +206,18 @@ export default function Contact() {
               <h2 className="text-2xl font-serif font-bold text-stone-900 mb-8 text-center">
                 Send a Message
               </h2>
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                {submitStatus === "success" && (
+                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md">
+                    Thank you! We've received your message and will respond
+                    shortly.
+                  </div>
+                )}
+                {submitStatus === "error" && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
+                    An error occurred. Please try again later.
+                  </div>
+                )}
                 <div>
                   <label
                     htmlFor="name"
@@ -175,8 +228,13 @@ export default function Contact() {
                   <input
                     type="text"
                     id="name"
-                    className="w-full px-4 py-3 border border-stone-300 rounded-md focus:ring-amber-500 focus:border-amber-500 bg-white"
+                    name="name"
+                    autoComplete="name"
+                    value={formState.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-stone-300 rounded-md focus-visible:ring-2 focus-visible:ring-wine-500 focus-visible:ring-offset-2 bg-white"
                     placeholder="Your name"
+                    required
                   />
                 </div>
                 <div>
@@ -189,8 +247,13 @@ export default function Contact() {
                   <input
                     type="email"
                     id="contact-email"
-                    className="w-full px-4 py-3 border border-stone-300 rounded-md focus:ring-amber-500 focus:border-amber-500 bg-white"
+                    name="email"
+                    autoComplete="email"
+                    value={formState.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-stone-300 rounded-md focus-visible:ring-2 focus-visible:ring-wine-500 focus-visible:ring-offset-2 bg-white"
                     placeholder="you@example.com"
+                    required
                   />
                 </div>
                 <div>
@@ -203,8 +266,12 @@ export default function Contact() {
                   <input
                     type="text"
                     id="subject"
-                    className="w-full px-4 py-3 border border-stone-300 rounded-md focus:ring-amber-500 focus:border-amber-500 bg-white"
+                    name="subject"
+                    value={formState.subject}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-stone-300 rounded-md focus-visible:ring-2 focus-visible:ring-wine-500 focus-visible:ring-offset-2 bg-white"
                     placeholder="How can we help?"
+                    required
                   />
                 </div>
                 <div>
@@ -216,16 +283,21 @@ export default function Contact() {
                   </label>
                   <textarea
                     id="contact-message"
+                    name="message"
                     rows={5}
-                    className="w-full px-4 py-3 border border-stone-300 rounded-md focus:ring-amber-500 focus:border-amber-500 bg-white"
+                    value={formState.message}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-stone-300 rounded-md focus-visible:ring-2 focus-visible:ring-wine-500 focus-visible:ring-offset-2 bg-white"
                     placeholder="Your message here…"
+                    required
                   />
                 </div>
                 <button
-                  type="button"
-                  className="w-full py-3 px-4 rounded-md shadow-sm text-lg font-medium text-white bg-stone-900 hover:bg-stone-800 transition-colors"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3 px-4 rounded-md shadow-sm text-lg font-medium text-white bg-wine-600 hover:bg-wine-700 focus-visible:ring-2 focus-visible:ring-wine-500 focus-visible:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {isSubmitting ? "Sending…" : "Send Message"}
                 </button>
               </form>
             </div>

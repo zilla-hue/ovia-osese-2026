@@ -24,7 +24,7 @@ export default function Layout() {
             <div className="flex-shrink-0 flex items-center">
               <Link
                 to="/"
-                className="text-2xl font-serif font-bold text-amber-800"
+                className="text-2xl font-serif font-bold text-wine-600"
               >
                 Ovia Osese 2026
               </Link>
@@ -36,14 +36,14 @@ export default function Layout() {
                 <Link
                   key={link.name}
                   to={link.path}
-                  className="text-stone-600 hover:text-amber-700 px-3 py-2 text-sm font-medium transition-colors"
+                  className="text-stone-600 hover:text-wine-600 px-3 py-2 text-sm font-medium transition-colors"
                 >
                   {link.name}
                 </Link>
               ))}
               <Link
                 to="/register"
-                className="bg-amber-700 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-amber-800 transition-colors"
+                className="bg-wine-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-wine-700 transition-colors"
               >
                 Register Now
               </Link>
@@ -53,7 +53,10 @@ export default function Layout() {
             <div className="md:hidden flex items-center">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-stone-600 hover:text-stone-900 focus:outline-none"
+                className="text-stone-600 hover:text-stone-900 focus-visible:ring-2 focus-visible:ring-wine-500 focus-visible:ring-offset-2 rounded-md p-1"
+                aria-label={
+                  isMenuOpen ? "Close navigation menu" : "Open navigation menu"
+                }
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -70,7 +73,7 @@ export default function Layout() {
                   key={link.name}
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-amber-700 hover:bg-stone-50"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-wine-600 hover:bg-stone-50"
                 >
                   {link.name}
                 </Link>
@@ -78,7 +81,7 @@ export default function Layout() {
               <Link
                 to="/register"
                 onClick={() => setIsMenuOpen(false)}
-                className="block w-full text-center mt-4 bg-amber-700 text-white px-4 py-3 rounded-md text-base font-medium hover:bg-amber-800"
+                className="block w-full text-center mt-4 bg-wine-600 text-white px-4 py-3 rounded-md text-base font-medium hover:bg-wine-700"
               >
                 Register Now
               </Link>
@@ -91,14 +94,14 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer className="bg-stone-900 text-stone-300 py-12">
+      <footer className="bg-royal-600 text-stone-300 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
               <h3 className="text-2xl font-serif font-bold text-white mb-2">
                 Ovia Osese 2026
               </h3>
-              <p className="text-sm text-amber-500 mb-4">
+              <p className="text-sm text-gold mb-4">
                 Ogori Descendants Union (ODU) · Festival Secretariat
               </p>
               <p className="text-stone-400 max-w-md">
@@ -115,7 +118,7 @@ export default function Layout() {
                 <li>
                   <Link
                     to="/about"
-                    className="hover:text-amber-500 transition-colors"
+                    className="hover:text-gold transition-colors"
                   >
                     About the Festival
                   </Link>
@@ -202,7 +205,7 @@ export default function Layout() {
                     href="https://wa.me/1234567890"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-amber-500 hover:text-amber-400 mt-2"
+                    className="inline-flex items-center text-gold hover:text-gold/80 mt-2"
                   >
                     Chat on WhatsApp
                   </a>
@@ -210,7 +213,7 @@ export default function Layout() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-stone-800 mt-12 pt-8 text-sm text-center">
+          <div className="border-t border-royal-500 mt-12 pt-8 text-sm text-center">
             <p>
               &copy; {new Date().getFullYear()} Ovia Osese Festival · Ogori
               Descendants Union. All rights reserved.

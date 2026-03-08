@@ -57,7 +57,7 @@ export default function Home() {
       <section className="relative min-h-[95vh] flex items-center justify-center bg-stone-900 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/WhatsApp Image 2026-03-04 at 13.46.03 (2).jpeg"
+            src="/images/hero.jpeg"
             alt="Ovia Osese Festival — traditional dancers celebrate in Ogori"
             className="w-full h-full object-cover opacity-35 scale-105"
             fetchPriority="high"
@@ -138,7 +138,7 @@ export default function Home() {
           </div>
           <div className="relative h-80 lg:h-auto">
             <img
-              src="/images/WhatsApp Image 2026-03-04 at 13.46.01.jpeg"
+              src="/images/maiden-procession1.jpeg"
               alt="Young women in traditional ceremonial attire during Ovia Osese procession"
               className="w-full h-full object-cover"
               loading="lazy"

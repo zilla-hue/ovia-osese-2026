@@ -6,10 +6,16 @@ export interface VisitorRow {
   email: string;
   phone: string;
   country: string;
-  participation_interest: string;
+  state: string | null;
+  indigene: string | null;
+  planning_to_attend: string | null;
   arrival_date: string | null;
   departure_date: string | null;
-  contact_preference: string;
+  group_size: string | null;
+  accommodation: string | null;
+  accommodation_help: string | null;
+  interests: string | null;       // comma-separated
+  receive_updates: string | null;
   status: string;
   created_at: string;
 }

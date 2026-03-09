@@ -4,18 +4,37 @@
 
 -- ── Visitors (festival registrations) ────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS visitors (
-  id                    BIGSERIAL PRIMARY KEY,
-  full_name             TEXT        NOT NULL,
-  email                 TEXT        NOT NULL,
-  phone                 TEXT        NOT NULL,
-  country               TEXT        NOT NULL,
-  participation_interest TEXT       NOT NULL,
-  arrival_date          DATE,
-  departure_date        DATE,
-  contact_preference    TEXT        NOT NULL,
-  status                TEXT        NOT NULL DEFAULT 'pending',
-  created_at            TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  id                   BIGSERIAL PRIMARY KEY,
+  full_name            TEXT        NOT NULL,
+  email                TEXT        NOT NULL,
+  phone                TEXT        NOT NULL,
+  country              TEXT        NOT NULL,
+  state                TEXT,
+  indigene             TEXT,
+  planning_to_attend   TEXT,
+  arrival_date         DATE,
+  departure_date       DATE,
+  group_size           TEXT,
+  accommodation        TEXT,
+  accommodation_help   TEXT,
+  interests            TEXT,        -- comma-separated list of interests
+  receive_updates      TEXT,
+  status               TEXT        NOT NULL DEFAULT 'pending',
+  created_at           TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- Add new columns to existing table (safe to run even if they already exist)
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS state               TEXT;
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS indigene            TEXT;
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS planning_to_attend  TEXT;
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS group_size          TEXT;
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS accommodation       TEXT;
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS accommodation_help  TEXT;
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS interests           TEXT;
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS receive_updates     TEXT;
+-- Remove old narrow columns if they exist (ignore errors if already gone)
+ALTER TABLE visitors DROP COLUMN IF EXISTS participation_interest;
+ALTER TABLE visitors DROP COLUMN IF EXISTS contact_preference;
 
 -- ── Sponsors ──────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS sponsors (

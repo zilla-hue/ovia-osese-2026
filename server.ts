@@ -10,6 +10,18 @@ const __dirname = path.dirname(__filename);
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
+const IS_DEV = process.env.NODE_ENV !== "production";
+
+/** In dev, include the real error message so it shows in the browser console. */
+function dbError(res: express.Response, label: string, error: unknown, status = 500) {
+  const msg = error instanceof Error ? error.message : String(error);
+  console.error(`[${label}]`, error);
+  res.status(status).json({
+    success: false,
+    error: IS_DEV ? msg : label,
+  });
+}
+
 /** Convert a snake_case object's keys to camelCase (one level deep). */
 function toCamel(obj: Record<string, unknown>): Record<string, unknown> {
   return Object.fromEntries(
@@ -107,10 +119,16 @@ async function startServer() {
         email,
         phone,
         country,
-        participationInterest,
+        state,
+        indigene,
+        planningToAttend,
         arrivalDate,
         departureDate,
-        contactPreference,
+        groupSize,
+        accommodation,
+        accommodationHelp,
+        interests,       // string[] from the form
+        receiveUpdates,
       } = req.body;
 
       const { data, error } = await supabase
@@ -120,10 +138,16 @@ async function startServer() {
           email,
           phone,
           country,
-          participation_interest: participationInterest,
+          state: state || null,
+          indigene: indigene || null,
+          planning_to_attend: planningToAttend || null,
           arrival_date: arrivalDate || null,
           departure_date: departureDate || null,
-          contact_preference: contactPreference,
+          group_size: groupSize || null,
+          accommodation: accommodation || null,
+          accommodation_help: accommodationHelp || null,
+          interests: Array.isArray(interests) ? interests.join(", ") : (interests || null),
+          receive_updates: receiveUpdates || null,
         })
         .select("id")
         .single();
@@ -131,8 +155,7 @@ async function startServer() {
       if (error) throw error;
       res.status(201).json({ success: true, id: data.id });
     } catch (error) {
-      console.error("Registration error:", error);
-      res.status(500).json({ success: false, error: "Failed to register" });
+      return dbError(res, "Failed to register", error);
     }
   });
 
@@ -158,8 +181,7 @@ async function startServer() {
       if (error) throw error;
       res.status(201).json({ success: true, id: data.id });
     } catch (error) {
-      console.error("Sponsor error:", error);
-      res.status(500).json({ success: false, error: "Failed to submit inquiry" });
+      return dbError(res, "Failed to submit inquiry", error);
     }
   });
 
@@ -175,7 +197,7 @@ async function startServer() {
       // Transform snake_case columns → camelCase for the frontend
       res.json({ success: true, data: data.map(toCamel) });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Failed to fetch news" });
+      return dbError(res, "Failed to fetch news", error);
     }
   });
 
@@ -193,8 +215,7 @@ async function startServer() {
       if (error) throw error;
       res.status(201).json({ success: true, id: data.id });
     } catch (error) {
-      console.error("Contact error:", error);
-      res.status(500).json({ success: false, error: "Failed to send message" });
+      return dbError(res, "Failed to send message", error);
     }
   });
 
@@ -258,8 +279,7 @@ async function startServer() {
         message: "Donation recorded. Thank you for your generosity!",
       });
     } catch (error) {
-      console.error("Donation error:", error);
-      res.status(500).json({ success: false, error: "Failed to process donation" });
+      return dbError(res, "Failed to process donation", error);
     }
   });
 
@@ -274,7 +294,7 @@ async function startServer() {
       if (error) throw error;
       res.json({ success: true, data: data.map(toCamel) });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Failed to fetch donations" });
+      return dbError(res, "Failed to fetch donations", error);
     }
   });
 
@@ -299,7 +319,7 @@ async function startServer() {
       }
       res.json({ success: true });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Failed to update donation" });
+      return dbError(res, "Failed to update donation", error);
     }
   });
 
@@ -355,8 +375,7 @@ async function startServer() {
 
       res.json({ success: true, status: txStatus, reference });
     } catch (error) {
-      console.error("Paystack verify error:", error);
-      res.status(500).json({ success: false, error: "Payment verification failed" });
+      return dbError(res, "Payment verification failed", error);
     }
   });
 
@@ -422,10 +441,7 @@ async function startServer() {
       if (error) throw error;
       res.status(201).json({ success: true, id: data.id });
     } catch (error) {
-      console.error("Volunteer error:", error);
-      res
-        .status(500)
-        .json({ success: false, error: "Failed to submit volunteer application" });
+      return dbError(res, "Failed to submit volunteer application", error);
     }
   });
 
@@ -447,7 +463,7 @@ async function startServer() {
       if (error) throw error;
       res.json({ success: true, data: data.map(toCamel) });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Failed to fetch volunteers" });
+      return dbError(res, "Failed to fetch volunteers", error);
     }
   });
 
@@ -472,7 +488,7 @@ async function startServer() {
       }
       res.json({ success: true });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Failed to update volunteer status" });
+      return dbError(res, "Failed to update volunteer status", error);
     }
   });
 
@@ -518,7 +534,7 @@ async function startServer() {
         },
       });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Failed to fetch stats" });
+      return dbError(res, "Failed to fetch stats", error);
     }
   });
 
@@ -533,7 +549,7 @@ async function startServer() {
       if (error) throw error;
       res.json({ success: true, data: data.map(toCamel) });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Failed to fetch registrations" });
+      return dbError(res, "Failed to fetch registrations", error);
     }
   });
 

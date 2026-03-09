@@ -97,16 +97,22 @@ app.post("/api/register", async (req, res) => {
 
 app.post("/api/sponsor", async (req, res) => {
   try {
-    const { companyName, contactName, email, phone, sponsorshipLevel, message } = req.body;
+    // Form sends: name, organisation, interest
+    // Legacy fields also accepted: companyName, contactName, sponsorshipLevel
+    const {
+      name, organisation, interest,           // Sponsors.tsx field names
+      companyName, contactName, sponsorshipLevel, // kept for backwards compat
+      email, phone, message,
+    } = req.body;
 
     const { data, error } = await supabase
       .from("sponsors")
       .insert({
-        company_name: companyName,
-        contact_name: contactName,
+        company_name: organisation || companyName || null,
+        contact_name: name || contactName || null,
         email,
         phone,
-        sponsorship_level: sponsorshipLevel,
+        sponsorship_level: interest || sponsorshipLevel || null,
         message: message || null,
       })
       .select("id")

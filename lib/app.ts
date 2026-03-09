@@ -412,3 +412,130 @@ app.get("/api/admin/registrations", adminAuth, async (_req, res) => {
     return dbError(res, "Failed to fetch registrations", error);
   }
 });
+
+app.delete("/api/admin/registrations/:id", adminAuth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { error } = await supabase.from("visitors").delete().eq("id", id);
+    if (error) throw error;
+    res.json({ success: true });
+  } catch (error) {
+    return dbError(res, "Failed to delete registration", error);
+  }
+});
+
+app.get("/api/admin/sponsors", adminAuth, async (_req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("sponsors")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    res.json({ success: true, data: data.map(toCamel) });
+  } catch (error) {
+    return dbError(res, "Failed to fetch sponsors", error);
+  }
+});
+
+app.put("/api/admin/sponsors/:id", adminAuth, async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  if (!["pending", "contacted", "confirmed"].includes(status))
+    return res.status(400).json({ success: false, error: "Invalid status value" });
+
+  try {
+    const { data, error } = await supabase
+      .from("sponsors")
+      .update({ status })
+      .eq("id", id)
+      .select("id");
+
+    if (error) throw error;
+    if (!data || data.length === 0)
+      return res.status(404).json({ success: false, error: "Sponsor not found" });
+    res.json({ success: true });
+  } catch (error) {
+    return dbError(res, "Failed to update sponsor status", error);
+  }
+});
+
+app.delete("/api/admin/sponsors/:id", adminAuth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { error } = await supabase.from("sponsors").delete().eq("id", id);
+    if (error) throw error;
+    res.json({ success: true });
+  } catch (error) {
+    return dbError(res, "Failed to delete sponsor", error);
+  }
+});
+
+app.get("/api/admin/messages", adminAuth, async (_req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("messages")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    res.json({ success: true, data: data.map(toCamel) });
+  } catch (error) {
+    return dbError(res, "Failed to fetch messages", error);
+  }
+});
+
+app.put("/api/admin/messages/:id", adminAuth, async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  if (!["unread", "read"].includes(status))
+    return res.status(400).json({ success: false, error: "Invalid status value" });
+
+  try {
+    const { data, error } = await supabase
+      .from("messages")
+      .update({ status })
+      .eq("id", id)
+      .select("id");
+
+    if (error) throw error;
+    if (!data || data.length === 0)
+      return res.status(404).json({ success: false, error: "Message not found" });
+    res.json({ success: true });
+  } catch (error) {
+    return dbError(res, "Failed to update message status", error);
+  }
+});
+
+app.delete("/api/admin/messages/:id", adminAuth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { error } = await supabase.from("messages").delete().eq("id", id);
+    if (error) throw error;
+    res.json({ success: true });
+  } catch (error) {
+    return dbError(res, "Failed to delete message", error);
+  }
+});
+
+app.delete("/api/donations/:id", adminAuth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { error } = await supabase.from("donations").delete().eq("id", id);
+    if (error) throw error;
+    res.json({ success: true });
+  } catch (error) {
+    return dbError(res, "Failed to delete donation", error);
+  }
+});
+
+app.delete("/api/volunteers/:id", adminAuth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { error } = await supabase.from("volunteers").delete().eq("id", id);
+    if (error) throw error;
+    res.json({ success: true });
+  } catch (error) {
+    return dbError(res, "Failed to delete volunteer", error);
+  }
+});

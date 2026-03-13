@@ -91,7 +91,7 @@ export default function Sponsors() {
       <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/WhatsApp Image 2026-03-04 at 13.46.02 (3).jpeg"
+            src="/images/hero-sponsors-gathering.jpg"
             alt="Community gathering at a cultural festival"
             className="w-full h-full object-cover"
             fetchPriority="high"

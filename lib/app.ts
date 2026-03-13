@@ -1,5 +1,10 @@
 import express from "express";
 import { supabase } from "./supabase.js";
+import {
+  sendDonationConfirmation,
+  sendRegistrationConfirmation,
+  sendVolunteerConfirmation,
+} from "./email.js";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -90,6 +95,8 @@ app.post("/api/register", async (req, res) => {
 
     if (error) throw error;
     res.status(201).json({ success: true, id: data.id });
+    // Fire-and-forget — response already sent; email failure must not affect the user
+    void sendRegistrationConfirmation({ fullName, email, planningToAttend, arrivalDate });
   } catch (error) {
     return dbError(res, "Failed to register", error);
   }
@@ -263,17 +270,36 @@ app.get("/api/donations/verify/:reference", async (req, res) => {
     const txStatus = paystackData.data.status;
     const dbStatus = txStatus === "success" ? "completed" : "failed";
 
-    const { data, error } = await supabase
+    // Fetch current record before updating — needed for email data and duplicate prevention
+    const { data: existing, error: fetchError } = await supabase
       .from("donations")
-      .update({ payment_status: dbStatus })
+      .select("id, donor_name, email, amount, donation_type, payment_status, created_at")
       .eq("payment_reference", reference)
-      .select("id");
+      .single();
 
-    if (error) throw error;
-    if (!data || data.length === 0)
+    if (fetchError || !existing)
       return res.status(404).json({ success: false, error: "Donation record not found for this reference" });
 
+    const { error } = await supabase
+      .from("donations")
+      .update({ payment_status: dbStatus })
+      .eq("payment_reference", reference);
+
+    if (error) throw error;
+
     res.json({ success: true, status: txStatus, reference });
+
+    // Send confirmation only when payment just succeeded for the first time
+    if (txStatus === "success" && existing.payment_status === "pending") {
+      void sendDonationConfirmation({
+        donorName: existing.donor_name,
+        email: existing.email,
+        amount: Number(existing.amount),
+        reference,
+        donationType: existing.donation_type,
+        date: existing.created_at,
+      });
+    }
   } catch (error) {
     return dbError(res, "Payment verification failed", error);
   }
@@ -318,6 +344,7 @@ app.post("/api/volunteer", async (req, res) => {
 
     if (error) throw error;
     res.status(201).json({ success: true, id: data.id });
+    void sendVolunteerConfirmation({ fullName, email, areaOfInterest, availability });
   } catch (error) {
     return dbError(res, "Failed to submit volunteer application", error);
   }

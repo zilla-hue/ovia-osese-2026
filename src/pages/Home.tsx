@@ -14,37 +14,37 @@ const expectItems = [
     icon: Landmark,
     title: "Cultural Processions",
     desc: "Witness the grandeur of traditional processions through historic Ogori.",
-    img: "/images/WhatsApp Image 2026-03-04 at 13.46.01.jpeg",
+    img: "/images/feature-procession.jpg",
   },
   {
     icon: Music,
     title: "Traditional Dances & Performances",
     desc: "Experience vibrant music and dance passed down through generations.",
-    img: "/images/WhatsApp Image 2026-03-04 at 13.46.02 (4).jpeg",
+    img: "/images/feature-dancers.jpg",
   },
   {
     icon: Users,
     title: "Community Gatherings",
     desc: "Join communal events that bring families and neighbours together.",
-    img: "/images/WhatsApp Image 2026-03-04 at 13.46.04 (3).jpeg",
+    img: "/images/feature-community.jpg",
   },
   {
     icon: BookOpen,
     title: "Heritage Sessions",
     desc: "Engage in discussions that preserve the history and values of the Ogori people.",
-    img: "/images/WhatsApp Image 2026-03-04 at 13.46.02 (2).jpeg",
+    img: "/images/feature-heritage-council.jpg",
   },
   {
     icon: Heart,
     title: "Family Reunions",
     desc: "Reconnect with loved ones returning from across Nigeria and the diaspora.",
-    img: "/images/WhatsApp Image 2026-03-04 at 13.46.02 (3).jpeg",
+    img: "/images/feature-reunion.jpg",
   },
   {
     icon: PartyPopper,
     title: "Grand Finale Celebration",
     desc: "The week culminates in a spectacular closing celebration for all.",
-    img: "/images/WhatsApp Image 2026-03-04 at 13.46.03 (2).jpeg",
+    img: "/images/feature-grand-finale.jpg",
   },
 ];
 
@@ -57,7 +57,7 @@ export default function Home() {
       <section className="relative min-h-[95vh] flex items-center justify-center bg-stone-900 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/hero.jpeg"
+            src="/images/hero-maiden-procession.jpg"
             alt="Ovia Osese Festival — traditional dancers celebrate in Ogori"
             className="w-full h-full object-cover opacity-35 scale-105"
             fetchPriority="high"
@@ -138,7 +138,7 @@ export default function Home() {
           </div>
           <div className="relative h-80 lg:h-auto">
             <img
-              src="/images/maiden-procession1.jpeg"
+              src="/images/preview-young-women.jpg"
               alt="Young women in traditional ceremonial attire during Ovia Osese procession"
               className="w-full h-full object-cover"
               loading="lazy"
@@ -152,7 +152,7 @@ export default function Home() {
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/WhatsApp Image 2026-03-04 at 13.46.03 (2).jpeg"
+            src="/images/feature-grand-finale.jpg"
             alt="Aerial view of Ogori village in Kogi State"
             className="w-full h-full object-cover opacity-15"
             loading="lazy"
@@ -223,7 +223,7 @@ export default function Home() {
       {/* ── Full-width Cultural Image Band ── */}
       <section className="relative h-80 md:h-[28rem] overflow-hidden">
         <img
-          src="/images/WhatsApp Image 2026-03-04 at 13.46.02 (2).jpeg"
+          src="/images/feature-heritage-council.jpg"
           alt="Community elders of Ogori in traditional council"
           className="w-full h-full object-cover"
           loading="lazy"

@@ -21,7 +21,7 @@ export default function About() {
       <section className="relative h-[50vh] min-h-[360px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/WhatsApp Image 2026-03-04 at 13.46.01.jpeg"
+            src="/images/feature-procession.jpg"
             alt="Community elders in traditional council"
             className="w-full h-full object-cover"
             fetchPriority="high"
@@ -60,7 +60,7 @@ export default function About() {
             </div>
             <div className="rounded-2xl overflow-hidden shadow-lg">
               <img
-                src="/images/WhatsApp Image 2026-03-04 at 13.46.04 (3).jpeg"
+                src="/images/hero-about-community.jpg"
                 alt="Scenic aerial view of Ogori village in Kogi State"
                 className="w-full h-auto object-cover"
                 loading="lazy"
@@ -107,7 +107,7 @@ export default function About() {
       {/* ── Full-width Image Divider ── */}
       <section className="relative h-64 md:h-96 overflow-hidden">
         <img
-          src="/images/WhatsApp Image 2026-03-04 at 13.46.02 (4).jpeg"
+          src="/images/feature-dancers.jpg"
           alt="Traditional drummers performing at a village festival"
           className="w-full h-full object-cover"
           loading="lazy"

@@ -47,7 +47,7 @@ export default function PlanVisit() {
       <section className="relative h-[45vh] min-h-[320px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/WhatsApp Image 2026-03-04 at 13.46.04 (3).jpeg"
+            src="/images/card-travel-visa.jpg"
             alt="Scenic view of Ogori village"
             className="w-full h-full object-cover"
             fetchPriority="high"
@@ -102,7 +102,7 @@ export default function PlanVisit() {
       {/* ── Image Divider ── */}
       <section className="relative h-64 md:h-80 overflow-hidden">
         <img
-          src="/images/WhatsApp Image 2026-03-04 at 13.46.04 (1).jpeg"
+          src="/images/hero-plan-visit.jpg"
           alt="Families reuniting at a cultural festival"
           className="w-full h-full object-cover"
           loading="lazy"

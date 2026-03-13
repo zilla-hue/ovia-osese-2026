@@ -76,9 +76,12 @@ export default function Layout() {
               to="/"
               end
               aria-label="Ovia Osese 2026 — homepage"
-              className="flex-shrink-0 font-serif font-bold text-wine-600 hover:text-wine-700 transition-colors text-xl xl:text-2xl"
+              className="flex-shrink-0 flex items-center gap-3"
             >
-              Ovia Osese 2026
+              <img src="/images/logo.png" alt="Ovia Osese Logo" className="h-10 lg:h-12 w-auto object-contain" />
+              <span className="font-serif font-bold text-wine-600 hover:text-wine-700 transition-colors text-xl xl:text-2xl">
+                Ovia Osese
+              </span>
             </NavLink>
 
             {/* ── Desktop nav (xl+) ── */}
@@ -210,9 +213,14 @@ export default function Layout() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
-              <h3 className="text-2xl font-serif font-bold text-white mb-2">
-                Ovia Osese 2026
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-white/90 p-1.5 rounded-lg inline-flex">
+                  <img src="/images/logo.png" alt="Ovia Osese Logo" className="h-10 w-auto object-contain" />
+                </div>
+                <h3 className="text-2xl font-serif font-bold text-white">
+                  Ovia Osese 2026
+                </h3>
+              </div>
               <p className="text-sm text-gold mb-4">
                 Ogori Descendants Union (ODU) · Festival Secretariat
               </p>
@@ -277,10 +285,10 @@ export default function Layout() {
                 </li>
                 <li>
                   <a
-                    href="tel:+234XXXXXXXXXX"
+                    href="tel:+234 803 249 0935"
                     className="hover:text-amber-500 transition-colors"
                   >
-                    +234 XXX XXX XXXX
+                    +234 803 249 0935
                   </a>
                 </li>
                 <li>

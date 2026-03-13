@@ -49,7 +49,7 @@ export default function Contact() {
       <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/WhatsApp Image 2026-03-04 at 13.46.04 (3).jpeg"
+            src="/images/hero-contact-overview.jpg"
             alt="Scenic view of Ogori village"
             className="w-full h-full object-cover"
             fetchPriority="high"
@@ -108,7 +108,7 @@ export default function Contact() {
                     <h3 className="text-lg font-bold text-stone-900 mb-1">
                       Phone
                     </h3>
-                    <p className="text-stone-600">+234 XXX XXX XXXX</p>
+                    <p className="text-stone-600">+234 803 249 0935</p>
                   </div>
                 </div>
 

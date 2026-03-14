@@ -308,7 +308,7 @@ export default function Layout() {
                 </li>
                 <li>
                   <a
-                    href="https://wa.me/1234567890"
+                    href="https://wa.me/+2348032490935"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-gold hover:text-gold/80 mt-2"

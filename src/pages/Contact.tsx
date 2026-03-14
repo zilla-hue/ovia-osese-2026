@@ -91,10 +91,10 @@ export default function Contact() {
                       Email
                     </h3>
                     <a
-                      href="mailto:info@oviaosese.ng"
+                      href="mailto:info@oviaosese.org"
                       className="text-stone-600 hover:text-wine-600 transition-colors"
                     >
-                      info@oviaosese.ng
+                      info@oviaosese.org
                     </a>
                   </div>
                 </div>

@@ -277,10 +277,10 @@ export default function Layout() {
               <ul className="space-y-2">
                 <li>
                   <a
-                    href="mailto:info@oviaosese.ng"
+                    href="mailto:info@oviaosese.org"
                     className="hover:text-amber-500 transition-colors"
                   >
-                    info@oviaosese.ng
+                    info@oviaosese.org
                   </a>
                 </li>
                 <li>

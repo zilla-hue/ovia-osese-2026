@@ -194,7 +194,7 @@ export default function Gallery() {
             heritage.
           </p>
           <a
-            href="mailto:info@oviaosese.ng?subject=Photo%20Submission"
+            href="mailto:info@oviaosese.org?subject=Photo%20Submission"
             className="inline-flex items-center gap-2 bg-wine-600 hover:bg-wine-500 text-white px-8 py-4 rounded-md text-base font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
           >
             Submit Your Photos

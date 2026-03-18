@@ -26,7 +26,7 @@ const expectItems = [
     icon: Users,
     title: "Community Gatherings",
     desc: "Join communal events that bring families and neighbours together.",
-    img: "/images/feature-community.jpg",
+    img: "/images/feature-community1.jpeg",
   },
   {
     icon: BookOpen,

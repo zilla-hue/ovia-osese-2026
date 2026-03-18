@@ -60,7 +60,7 @@ export default function About() {
             </div>
             <div className="rounded-2xl overflow-hidden shadow-lg">
               <img
-                src="/images/hero-about-community.jpg"
+                src="/images/feature-community1.jpeg"
                 alt="Scenic aerial view of Ogori village in Kogi State"
                 className="w-full h-auto object-cover"
                 loading="lazy"

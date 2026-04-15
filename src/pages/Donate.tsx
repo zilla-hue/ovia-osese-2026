@@ -1,39 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { CheckCircle, Heart, Loader2 } from "lucide-react";
+import { CheckCircle, Heart, Loader2, Landmark, Copy, Check } from "lucide-react";
 
-// ── Paystack inline popup type declaration ────────────────────────────────────
-declare global {
-  interface Window {
-    PaystackPop?: {
-      setup: (options: {
-        key: string;
-        email: string;
-        amount: number; // kobo
-        currency?: string;
-        ref: string;
-        label?: string;
-        metadata?: {
-          custom_fields?: {
-            display_name: string;
-            variable_name: string;
-            value: string;
-          }[];
-        };
-        callback: (response: { reference: string }) => void;
-        onClose: () => void;
-      }) => { openIframe: () => void };
-    };
-  }
-}
+// ── Paystack integration is temporarily disabled. ─────────────────────────────
+// To restore: revert this file from git history or the "paystack-backup" tag.
+// The Paystack type declarations, script loader, popup flow, and verify callback
+// have been removed from this file but preserved in the backend verify route
+// (lib/app.ts) and the VITE_PAYSTACK_PUBLIC_KEY env var.
+
+// ── Bank transfer details ────────────────────────────────────────────────────
+
+const BANK_ACCOUNTS = [
+  {
+    label: "Naira Account",
+    accountName: "Ogori Descendants Union",
+    accountNumber: "1028075458",
+    bank: "United Bank for Africa",
+  },
+  {
+    label: "Domiciliary Account",
+    accountName: "Ogori Descendants Union",
+    accountNumber: "3004759118",
+    bank: "United Bank for Africa",
+  },
+] as const;
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const PREDEFINED_AMOUNTS = [5_000, 10_000, 25_000, 50_000];
-
-const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY as string | undefined;
 
 // ── Form schema ───────────────────────────────────────────────────────────────
 
@@ -59,34 +55,45 @@ const inputClass =
 const labelClass = "block text-sm font-medium text-stone-700 mb-1";
 const errorClass = "mt-1 text-sm text-red-600";
 
+// ── Copy-to-clipboard helper ─────────────────────────────────────────────────
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* clipboard unavailable — user can still copy manually */
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="ml-2 inline-flex items-center text-stone-400 hover:text-wine-600 transition-colors"
+      aria-label={`Copy ${text}`}
+    >
+      {copied ? (
+        <Check className="w-4 h-4 text-green-500" />
+      ) : (
+        <Copy className="w-4 h-4" />
+      )}
+    </button>
+  );
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function Donate() {
-  const [paystackReady, setPaystackReady] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [reference, setReference] = useState("");
   const [paidAmount, setPaidAmount] = useState(0);
-
-  // Load Paystack inline script once on mount
-  useEffect(() => {
-    if (window.PaystackPop) {
-      setPaystackReady(true);
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = "https://js.paystack.co/v1/inline.js";
-    script.async = true;
-    script.onload = () => setPaystackReady(true);
-    script.onerror = () =>
-      console.warn("Paystack inline script failed to load.");
-    document.body.appendChild(script);
-    return () => {
-      if (document.body.contains(script)) document.body.removeChild(script);
-    };
-  }, []);
 
   const {
     register,
@@ -110,27 +117,9 @@ export default function Donate() {
 
   const onSubmit = async (data: DonationFormValues) => {
     setSubmitError("");
-
-    // Guard: Paystack key required
-    if (!PAYSTACK_PUBLIC_KEY) {
-      setSubmitError(
-        "Online payment is not configured. Please contact the festival team."
-      );
-      return;
-    }
-
-    // Guard: Paystack script must be loaded
-    if (!paystackReady || !window.PaystackPop) {
-      setSubmitError(
-        "Payment system is still loading. Please wait a moment and try again."
-      );
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
-      // Step 1: Create pending donation record → receive reference
       const response = await fetch("/api/donations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -138,83 +127,21 @@ export default function Donate() {
       });
       const result = await response.json();
       if (!response.ok || !result.success) {
-        throw new Error(result.error || "Failed to initialise donation");
+        throw new Error(result.error || "Failed to record donation");
       }
 
       const { reference: ref } = result as { reference: string };
-      const amountNgn = parseFloat(data.amount);
-
-      setIsSubmitting(false);
-
-      // Step 2: Open Paystack popup
-      const handler = window.PaystackPop!.setup({
-        key: PAYSTACK_PUBLIC_KEY,
-        email: data.email,
-        amount: Math.round(amountNgn * 100), // Paystack requires kobo
-        currency: "NGN",
-        ref,
-        label: data.donorName,
-        metadata: {
-          custom_fields: [
-            {
-              display_name: "Donor Name",
-              variable_name: "donor_name",
-              value: data.donorName,
-            },
-            ...(data.message
-              ? [
-                  {
-                    display_name: "Message",
-                    variable_name: "message",
-                    value: data.message,
-                  },
-                ]
-              : []),
-          ],
-        },
-
-        // Step 3: Paystack calls this after a successful payment.
-        // Must be a regular (non-async) function — Paystack v1 inline.js
-        // validates with typeof, which can fail for async functions in some runtimes.
-        callback: (paystackResponse: { reference: string }) => {
-          setIsVerifying(true);
-          fetch(`/api/donations/verify/${paystackResponse.reference}`)
-            .then((r) => r.json())
-            .then((verifyData: { success: boolean; status: string; reference: string }) => {
-              if (verifyData.success && verifyData.status === "success") {
-                setPaidAmount(amountNgn);
-                setReference(paystackResponse.reference);
-                setSubmitSuccess(true);
-                reset();
-              } else {
-                setSubmitError(
-                  `Payment completed but verification is pending. ` +
-                    `Please quote reference ${paystackResponse.reference} ` +
-                    `if you need assistance.`
-                );
-              }
-            })
-            .catch(() => {
-              setSubmitError(
-                `Verification failed. Please contact us with reference: ${paystackResponse.reference}`
-              );
-            })
-            .finally(() => {
-              setIsVerifying(false);
-            });
-        },
-
-        // User closed the popup without paying — let them try again quietly
-        onClose: () => {},
-      });
-
-      handler.openIframe();
+      setPaidAmount(parseFloat(data.amount));
+      setReference(ref);
+      setSubmitSuccess(true);
+      reset();
     } catch (err: unknown) {
       setSubmitError(
         err instanceof Error
           ? err.message
           : "An error occurred. Please try again."
       );
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -253,41 +180,83 @@ export default function Donate() {
             makes a difference.
           </p>
 
+          {/* ── Bank Transfer Details ── */}
+          <div className="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-stone-200 mb-10">
+            <div className="flex items-center gap-3 mb-6">
+              <Landmark className="w-6 h-6 text-wine-600" />
+              <h2 className="text-xl font-serif font-bold text-stone-900">
+                Bank Transfer Payment Details
+              </h2>
+            </div>
+
+            <p className="text-stone-600 mb-6">
+              Please make payment using one of the account details below and
+              send proof of payment for confirmation.
+            </p>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              {BANK_ACCOUNTS.map((account) => (
+                <div
+                  key={account.accountNumber}
+                  className="rounded-xl border border-stone-200 bg-stone-50 p-5"
+                >
+                  <p className="text-xs font-semibold uppercase tracking-wider text-wine-600 mb-3">
+                    {account.label}
+                  </p>
+                  <dl className="space-y-2 text-sm">
+                    <div>
+                      <dt className="text-stone-400">Account Name</dt>
+                      <dd className="font-medium text-stone-800">
+                        {account.accountName}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-stone-400">Account Number</dt>
+                      <dd className="font-mono font-bold text-stone-900 flex items-center">
+                        {account.accountNumber}
+                        <CopyButton text={account.accountNumber} />
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-stone-400">Bank</dt>
+                      <dd className="font-medium text-stone-800">
+                        {account.bank}
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Donation form (records intent, no online payment) ── */}
           <div className="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-stone-200">
 
-            {/* ── Verifying overlay ── */}
-            {isVerifying && (
-              <div className="text-center py-12">
-                <Loader2 className="w-12 h-12 text-wine-600 mx-auto mb-4 animate-spin" />
-                <p className="text-lg font-medium text-stone-700">
-                  Verifying your payment…
-                </p>
-                <p className="text-sm text-stone-400 mt-1">Please do not close this page.</p>
-              </div>
-            )}
-
             {/* ── Success screen ── */}
-            {!isVerifying && submitSuccess && (
+            {submitSuccess && (
               <div className="text-center py-8">
                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-5" />
                 <h3 className="text-2xl font-serif font-bold text-stone-900 mb-2">
-                  Payment Confirmed!
+                  Donation Recorded — Awaiting Payment Confirmation
                 </h3>
                 <p className="text-3xl font-bold text-wine-600 mb-4">
                   ₦{paidAmount.toLocaleString()}
                 </p>
                 <p className="text-stone-600 mb-6 max-w-md mx-auto">
-                  Thank you for your generosity. Your contribution will help
-                  preserve the heritage and culture of the Ogori people at
-                  Ovia Osese 2026.
+                  Thank you! Please complete your bank transfer using the
+                  account details above and send your proof of payment. Your
+                  donation will be confirmed once we verify receipt.
                 </p>
 
                 <div className="bg-stone-50 border border-stone-200 rounded-lg px-6 py-4 inline-block mb-8">
                   <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">
-                    Transaction Reference
+                    Reference Number
                   </p>
                   <p className="font-mono font-bold text-stone-700 tracking-wider">
                     {reference}
+                  </p>
+                  <p className="text-xs text-stone-400 mt-1">
+                    Please include this reference in your transfer narration.
                   </p>
                 </div>
 
@@ -303,8 +272,16 @@ export default function Donate() {
             )}
 
             {/* ── Donation form ── */}
-            {!isVerifying && !submitSuccess && (
+            {!submitSuccess && (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                <h3 className="text-lg font-serif font-semibold text-stone-900">
+                  Register Your Donation
+                </h3>
+                <p className="text-sm text-stone-500 -mt-4">
+                  Fill in the form below so we can match your bank transfer to
+                  your donation record.
+                </p>
+
                 {submitError && (
                   <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
                     {submitError}
@@ -432,20 +409,16 @@ export default function Donate() {
                 <div>
                   <button
                     type="submit"
-                    disabled={isSubmitting || !paystackReady}
+                    disabled={isSubmitting}
                     className="w-full py-4 px-4 rounded-md shadow-sm text-lg font-medium text-white bg-wine-600 hover:bg-wine-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-wine-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
                   >
                     {isSubmitting && <Loader2 className="w-5 h-5 animate-spin" />}
-                    {isSubmitting
-                      ? "Preparing…"
-                      : !paystackReady
-                      ? "Loading payment…"
-                      : "Donate Now"}
+                    {isSubmitting ? "Submitting…" : "Submit Donation"}
                   </button>
                   <p className="text-xs text-stone-400 text-center mt-3">
-                    Payments are processed securely by{" "}
-                    <span className="font-medium">Paystack</span>. Card details
-                    are never stored on our servers.
+                    After submitting, please complete your bank transfer and
+                    send proof of payment. Your donation status will show as
+                    "Awaiting Payment Confirmation" until verified.
                   </p>
                 </div>
               </form>

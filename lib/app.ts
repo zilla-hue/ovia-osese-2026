@@ -242,7 +242,17 @@ app.put("/api/donations/:id", adminAuth, async (req, res) => {
   }
 });
 
+// NOTE: Paystack verification is temporarily disabled while payments are handled
+// via manual bank transfer. To restore, remove the early-return block below and
+// ensure PAYSTACK_SECRET_KEY is set in the environment.
 app.get("/api/donations/verify/:reference", async (req, res) => {
+  // ── Temporary: online payment verification is disabled ──
+  return res.status(503).json({
+    success: false,
+    error: "Online payment verification is temporarily unavailable. Payments are currently accepted via bank transfer.",
+  });
+
+  /* === PAYSTACK VERIFICATION (temporarily disabled) ===
   const { reference } = req.params;
   if (!reference || typeof reference !== "string")
     return res.status(400).json({ success: false, error: "Invalid reference" });
@@ -303,6 +313,7 @@ app.get("/api/donations/verify/:reference", async (req, res) => {
   } catch (error) {
     return dbError(res, "Payment verification failed", error);
   }
+  === END PAYSTACK VERIFICATION === */
 });
 
 // ── Volunteers ────────────────────────────────────────────────────────────────
